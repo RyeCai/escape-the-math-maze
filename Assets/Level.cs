@@ -639,8 +639,8 @@ public class Level : MonoBehaviour
                     capsule.name = "DRUG";
                     capsule.transform.localScale = new Vector3(0.25f, 0.25f, 0.25f);
                     capsule.transform.position = new Vector3(x + 0.5f, y + Random.Range(1.0f, storey_height / 2.0f), z + 0.5f);
-                    capsule.GetComponent<Renderer>().material.color = Color.green;
-                    capsule.AddComponent<Drug>();
+                    capsule.GetComponent<Renderer>().material.color = Color.magenta;
+                    capsule.AddComponent<Problem>();
                 }
                 else if (solution[w, l][0] == TileType.WATER)
                 {
