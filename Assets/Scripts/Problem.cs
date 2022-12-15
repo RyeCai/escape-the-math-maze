@@ -14,6 +14,7 @@ public class Problem : MonoBehaviour
     private AudioSource source;
     private AudioClip win_sound;
     public TMP_InputField input;
+    private TMP_Text placehold; 
     public Button submit;
     private Canvas panel;
     // private GameObject p;
@@ -30,6 +31,8 @@ public class Problem : MonoBehaviour
     private string arith_operator;
     string[] arith_operator_types = { "+", "-", "*", "/" };
     private bool touching;
+    private Color gray = new Color(50, 50, 50, 128);
+    private Color incorrect = new Color(255, 0, 0, 128);
     void Start()
     {
         Canvas[] panels = GameObject.FindObjectsOfType<Canvas>(true);
@@ -41,6 +44,7 @@ public class Problem : MonoBehaviour
                 break;
             }
         }
+        placehold = input.placeholder.GetComponent<TMP_Text>();
         touching = false;
         fps_player_obj = GameObject.FindGameObjectWithTag("PLAYER");
         //GameObject level_obj = GameObject.FindGameObjectWithTag("Level");
@@ -101,6 +105,9 @@ public class Problem : MonoBehaviour
             question.text = operand1.ToString() + arith_operator + operand2.ToString();
             panel.gameObject.SetActive(true);
             input.ActivateInputField();
+            placehold.text = "Answer";
+            placehold.color = gray;
+            input.text = "";
         }
     }
 
@@ -109,13 +116,14 @@ public class Problem : MonoBehaviour
         
         if (answer == solution){
             solved = true;
-            Debug.Log("Yay");
             gameObject.GetComponent<Renderer>().material.color = Color.green;
+            panel.gameObject.SetActive(false);
+            touching = false;
         } else{
-            Debug.Log("No");
+            input.text = "";
+            placehold.text = "Incorrect";
+            placehold.color = incorrect;
         }
-        panel.gameObject.SetActive(false);
-        touching = false;
     }
 
     private void Update()
@@ -133,7 +141,6 @@ public class Problem : MonoBehaviour
                 touching = false;  
             } else if (Input.GetKeyUp(KeyCode.Return))
             {
-                Debug.Log("Enter Pressed");
                 SubmitAnswer();
             }
         }
