@@ -32,6 +32,15 @@ public class Problem : MonoBehaviour
     private bool touching;
     void Start()
     {
+        Canvas[] panels = GameObject.FindObjectsOfType<Canvas>(true);
+        foreach (Canvas pan in panels)
+        {
+            if (pan.tag == "prob")
+            {
+                panel = pan;
+                break;
+            }
+        }
         touching = false;
         fps_player_obj = GameObject.FindGameObjectWithTag("PLAYER");
         //GameObject level_obj = GameObject.FindGameObjectWithTag("Level");
@@ -39,11 +48,9 @@ public class Problem : MonoBehaviour
         //GameObject canvas_obj = GameObject.FindGameObjectWithTag("ProblemCanvas");
         //problems = canvas_obj.GetComponent<Canvas>();
         solved = false;
-        panel = GameObject.FindObjectOfType<Canvas>(true);
         //panel = GameObject.Instantiate(prob) as GameObject;
 
         //panel.gameObject.SetActive(true);
-        Debug.Log(panel);
         //panel.transform.SetParent(problems.transform,false);
 
         //Generate random math problem
