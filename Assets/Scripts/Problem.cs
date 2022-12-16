@@ -31,7 +31,7 @@ public class Problem : MonoBehaviour
     private string arith_operator;
     string[] arith_operator_types = { "+", "-", "*", "/" };
     private bool touching;
-    private Color gray = new Color(50, 50, 50, 128);
+    private Color gray = new Color(30, 30, 30, 250);
     private Color incorrect = new Color(255, 0, 0, 128);
     void Start()
     {
@@ -104,10 +104,12 @@ public class Problem : MonoBehaviour
             touching = true;
             question.text = operand1.ToString() + arith_operator + operand2.ToString();
             panel.gameObject.SetActive(true);
+            input.text = "";
             input.ActivateInputField();
             placehold.text = "Answer";
             placehold.color = gray;
-            input.text = "";
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
         }
     }
 
@@ -130,6 +132,8 @@ public class Problem : MonoBehaviour
     {
         if (panel.gameObject.activeSelf && touching)
         {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
             float distance = (gameObject.transform.position - fps_player_obj.gameObject.transform.position).magnitude;
             bool correctForm = int.TryParse(input.text, out int a);
             answer = correctForm ? a : answer;
@@ -145,5 +149,4 @@ public class Problem : MonoBehaviour
             }
         }
     }
-
 }
