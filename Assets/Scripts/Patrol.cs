@@ -20,7 +20,9 @@ public class Patrol : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Vector3.Distance(transform.position, target) < 1){
+        Vector3 dist = transform.position - target;
+        dist.y = 0;
+        if(dist.magnitude < 1){
             index = (index + 1) % points.Length;
             target = points[index].position;
             agent.SetDestination(target);
