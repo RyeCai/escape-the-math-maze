@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PatrolAndSeek : MonoBehaviour
 {
+    private Animator animation_controller;
     UnityEngine.AI.NavMeshAgent agent;
     public Transform[] points;
     private int index;
@@ -25,11 +26,12 @@ public class PatrolAndSeek : MonoBehaviour
         //     }
         // }
         fps_player_obj = GameObject.FindGameObjectWithTag("PLAYER");
-        radius_of_search_for_player = 30.0f;
+        radius_of_search_for_player = 10.0f;
         index = 0;
         agent = GetComponent<UnityEngine.AI.NavMeshAgent>();    
         target = points[index].position;
         agent.SetDestination(target);
+        animation_controller = GetComponent<Animator>();
     }
 
     // Update is called once per frame
