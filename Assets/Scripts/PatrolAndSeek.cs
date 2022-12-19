@@ -11,7 +11,6 @@ public class PatrolAndSeek : MonoBehaviour
     private Vector3 target;
     private GameObject fps_player_obj;
     private float radius_of_search_for_player;
-    private Transform sight;
     private Vector3 distToPlayer;
     private Vector3 dirToPlayer;
     private Vector3 forwardVector;
@@ -19,12 +18,6 @@ public class PatrolAndSeek : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // foreach(Transform child in transform){
-        //     if(child.name == "Sight"){
-        //         sight = child;
-        //         break;
-        //     }
-        // }
         fps_player_obj = GameObject.FindGameObjectWithTag("PLAYER");
         radius_of_search_for_player = 10.0f;
         index = 0;
@@ -42,9 +35,6 @@ public class PatrolAndSeek : MonoBehaviour
         dirToPlayer = fps_player_obj.transform.position - transform.position;
         dirToPlayer.Normalize();
         var dot = Vector3.Dot(dirToPlayer, transform.forward);
-        // sight.transform.LookAt(fps_player_obj.transform);
-        // Physics.Raycast(sight.transform.position, sight.transform.forward, 100)
-        // Debug.Log(dot);
         RaycastHit hit;
         // if player is in sight
         if(distToPlayer.magnitude < radius_of_search_for_player && dot > 0.707 && Physics.Raycast(transform.position, dirToPlayer, out hit) && hit.collider.tag == "PLAYER" && !StaticData.invisible){
