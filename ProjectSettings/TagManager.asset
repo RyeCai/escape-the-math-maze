@@ -8,6 +8,7 @@ TagManager:
   - ProblemCanvas
   - prob
   - PLAYER
+  - Invisible
   layers:
   - Default
   - TransparentFX

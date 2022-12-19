@@ -44,13 +44,14 @@ public class PatrolAndSeek : MonoBehaviour
         var dot = Vector3.Dot(dirToPlayer, transform.forward);
         // sight.transform.LookAt(fps_player_obj.transform);
         // Physics.Raycast(sight.transform.position, sight.transform.forward, 100)
-        Debug.Log(dot);
+        // Debug.Log(dot);
         RaycastHit hit;
         // if player is in sight
-        if(distToPlayer.magnitude < radius_of_search_for_player && dot > 0.707 && Physics.Raycast(transform.position, dirToPlayer, out hit) && hit.collider.tag == "PLAYER"){
+        if(distToPlayer.magnitude < radius_of_search_for_player && dot > 0.707 && Physics.Raycast(transform.position, dirToPlayer, out hit) && hit.collider.tag == "PLAYER" && !StaticData.invisible){
+        // if(!StaticData.invisible){
             target = fps_player_obj.transform.position;
             agent.SetDestination(target);
-            Debug.Log("sighted");
+            // Debug.Log("sighted");
         }else{
             Vector3 dist = transform.position - target;
             dist.y = 0;
