@@ -1867,7 +1867,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &754961822
 MonoBehaviour:
@@ -1881,9 +1881,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 776c511e10a6f9b44b1985437ea43713, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  question: {fileID: 1403603136}
   input: {fileID: 980681248}
   submit: {fileID: 2013404907}
-  question: {fileID: 1403603136}
 --- !u!1 &828705498
 GameObject:
   m_ObjectHideFlags: 0
@@ -1896,9 +1896,10 @@ GameObject:
   - component: {fileID: 828705501}
   - component: {fileID: 828705500}
   - component: {fileID: 828705499}
+  - component: {fileID: 828705503}
   m_Layer: 0
   m_Name: Plane
-  m_TagString: Untagged
+  m_TagString: Level
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1974,14 +1975,30 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 828705498}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.2823505, y: 0, z: -0.7869425}
-  m_LocalScale: {x: 16, y: 1, z: 16}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 38, y: 0, z: 38}
+  m_LocalScale: {x: 8, y: 1, z: 8}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &828705503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 828705498}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a31cb4d7b5cc9d4e9477cc274d3f1e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wall_prefab: {fileID: 716699170560889456, guid: 5d4bd0e48bd545440ab01b951c97cb60,
+    type: 3}
+  wall_length: 4
+  size: 16
 --- !u!1 &838494537
 GameObject:
   m_ObjectHideFlags: 0
@@ -2364,7 +2381,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 28}
+  m_AnchoredPosition: {x: 0, y: 39}
   m_SizeDelta: {x: 200, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &980681248
@@ -2939,9 +2956,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 776c511e10a6f9b44b1985437ea43713, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  question: {fileID: 1403603136}
   input: {fileID: 980681248}
   submit: {fileID: 2013404907}
-  question: {fileID: 1403603136}
 --- !u!65 &1257442162
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -3018,7 +3035,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1382880046
 GameObject:
@@ -4590,7 +4607,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -178}
+  m_AnchoredPosition: {x: 0, y: -176}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2013404907
@@ -4720,8 +4737,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -58}
-  m_SizeDelta: {x: 120, y: 120}
+  m_AnchoredPosition: {x: 0, y: -54}
+  m_SizeDelta: {x: 120, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2058918817
 MonoBehaviour:
@@ -5096,5 +5113,5 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}

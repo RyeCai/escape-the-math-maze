@@ -13,6 +13,7 @@ public class Problem : MonoBehaviour
     private Level level;
     private AudioSource source;
     private AudioClip win_sound;
+    public TMP_Text question;
     public TMP_InputField input;
     private TMP_Text placehold; 
     public Button submit;
@@ -20,8 +21,6 @@ public class Problem : MonoBehaviour
     // private GameObject p;
     private int answer;
     private int solution;
-    public TMP_Text question;
-    private Canvas problems;
     private bool solved;
     // public GameObject panel;
     
@@ -31,7 +30,7 @@ public class Problem : MonoBehaviour
     private string arith_operator;
     string[] arith_operator_types = { "+", "-", "*", "/" };
     private bool touching;
-    private Color gray = new Color(30, 30, 30, 250);
+    private Color gray = new Color(0, 0, 0, 250);
     private Color incorrect = new Color(255, 0, 0, 128);
     void Start()
     {
@@ -102,7 +101,7 @@ public class Problem : MonoBehaviour
         {
             //Debug.Log("oop");
             touching = true;
-            question.text = operand1.ToString() + arith_operator + operand2.ToString();
+            question.text = operand1.ToString() + " " + arith_operator +  " " + operand2.ToString();
             panel.gameObject.SetActive(true);
             input.text = "";
             input.ActivateInputField();
