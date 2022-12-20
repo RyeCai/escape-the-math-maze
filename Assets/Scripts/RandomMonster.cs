@@ -19,6 +19,18 @@ public class RandomMonster : MonoBehaviour
     private float zMax;
     private float zMin;
     private float timer;
+
+    //  public Vector3 RandomNavmeshLocation(float radius) {
+    //      Vector3 randomDirection = Random.insideUnitSphere * radius;
+    //      randomDirection += transform.position;
+    //      UnityEngine.AI.NavMeshHit hit;
+    //      Vector3 finalPosition = Vector3.zero;
+    //      if (UnityEngine.AI.NavMesh.SamplePosition(randomDirection, out hit, radius, 1)) {
+    //          finalPosition = hit.position;            
+    //      }
+    //      return finalPosition;
+    //  }
+
     // Start is called before the first frame update
     void Start()
     {
@@ -35,11 +47,12 @@ public class RandomMonster : MonoBehaviour
         //         zMin = vertex.position.z;
         //     }
         // }\
-        xMax=16;
-        xMin=16;
-        zMax=16;
-        zMin=16;
+        xMax=64;
+        xMin=0;
+        zMax=64;
+        zMin=0;
         target = new Vector3(Random.Range(xMin, xMax), 0, Random.Range(zMin, zMax));
+        // target = RandomNavmeshLocation(8);
         agent.SetDestination(target);
         timer = 5.0f;
         animation_controller = GetComponent<Animator>();
@@ -57,15 +70,17 @@ public class RandomMonster : MonoBehaviour
         // if player is in sight
         if(distToPlayer.magnitude > 1 && distToPlayer.magnitude < radius_of_search_for_player && dot > 0.707 && Physics.Raycast(transform.position, dirToPlayer, out hit) && hit.collider.tag == "PLAYER" && !StaticData.invisible){
         // if(!StaticData.invisible && distToPlayer.magnitude > 1){
-            target = fps_player_obj.transform.position;
-            agent.SetDestination(target);
+            // target = fps_player_obj.transform.position;
+            agent.SetDestination(fps_player_obj.transform.position);
             Debug.Log("sighted");
         }else{
+            agent.SetDestination(target);
             timer -= Time.deltaTime;
             Vector3 dist = transform.position - target;
             dist.y = 0;
             // Maybe just switch targets every so many seconds
             if(dist.magnitude < 1 || timer <= 0.0f){
+                // target = RandomNavmeshLocation(8);
                 target = new Vector3(Random.Range(xMin, xMax), 0, Random.Range(zMin, zMax));
                 agent.SetDestination(target);
                 timer = 5.0f;
