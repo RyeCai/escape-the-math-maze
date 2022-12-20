@@ -25,16 +25,20 @@ public class RandomMonster : MonoBehaviour
         fps_player_obj = GameObject.FindGameObjectWithTag("PLAYER");
         radius_of_search_for_player = 10.0f;
         agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
-        foreach (Transform vertex in plane.transform){
-            if(vertex.name == "TopRight"){
-                xMax = vertex.position.x;
-                zMax = vertex.position.z;
-            }
-            if(vertex.name == "BottomLeft"){
-                xMin = vertex.position.x;
-                zMin = vertex.position.z;
-            }
-        }
+        // foreach (Transform vertex in plane.transform){
+        //     if(vertex.name == "TopRight"){
+        //         xMax = vertex.position.x;
+        //         zMax = vertex.position.z;
+        //     }
+        //     if(vertex.name == "BottomLeft"){
+        //         xMin = vertex.position.x;
+        //         zMin = vertex.position.z;
+        //     }
+        // }\
+        xMax=16;
+        xMin=16;
+        zMax=16;
+        zMin=16;
         target = new Vector3(Random.Range(xMin, xMax), 0, Random.Range(zMin, zMax));
         agent.SetDestination(target);
         timer = 5.0f;
@@ -52,7 +56,7 @@ public class RandomMonster : MonoBehaviour
         RaycastHit hit;
         // if player is in sight
         if(distToPlayer.magnitude > 1 && distToPlayer.magnitude < radius_of_search_for_player && dot > 0.707 && Physics.Raycast(transform.position, dirToPlayer, out hit) && hit.collider.tag == "PLAYER" && !StaticData.invisible){
-        // if(!StaticData.invisible){
+        // if(!StaticData.invisible && distToPlayer.magnitude > 1){
             target = fps_player_obj.transform.position;
             agent.SetDestination(target);
             Debug.Log("sighted");

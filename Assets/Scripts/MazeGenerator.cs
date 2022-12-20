@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.AI;
 public class MazeGenerator : MonoBehaviour
 {
     //public class Cell {
@@ -28,6 +29,7 @@ public class MazeGenerator : MonoBehaviour
     //    public bool left;
     //}
 
+    public GameObject holder;
     public GameObject wall_prefab;
     public int wall_length = 4;
     public int size = 16;
@@ -140,12 +142,18 @@ public class MazeGenerator : MonoBehaviour
                 {
                     GameObject wall = Instantiate(wall_prefab, new Vector3(i*wall_length, wall_length/2, j*wall_length - wall_length/2), Quaternion.identity);
                     wall.name = string.Format("HWALL {0}, {1}", i, j);
+                    wall.transform.SetParent(holder.transform);
+                    // NavMeshSurface surface = wall.GetComponent<NavMeshSurface>();
+                    // surface.BuildNavMesh ();
                 }
                 if (v_wall[i,j])
                 {
                     GameObject wall = Instantiate(wall_prefab, new Vector3(i * wall_length - wall_length/2, wall_length / 2, j * wall_length), Quaternion.identity);
                     wall.transform.Rotate(0.0f, 90.0f, 0.0f);
                     wall.name = string.Format("VWALL {0}, {1}", i, j);
+                    wall.transform.SetParent(holder.transform);
+                    // NavMeshSurface surface = wall.GetComponent<NavMeshSurface>();
+                    // surface.BuildNavMesh ();
                 }
             }
         }
