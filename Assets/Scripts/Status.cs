@@ -75,5 +75,9 @@ public class Status : MonoBehaviour
             powerUpDuration = 12.0f;
             Destroy(collision.gameObject);
         }
+        if(collision.gameObject.tag == "Heal" && health<3){
+            health++;
+            Destroy(collision.gameObject);
+        }
     }
 }
