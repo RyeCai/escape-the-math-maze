@@ -5,5 +5,6 @@ using UnityEngine;
 public class StaticData 
 {
     public static bool invisible;
+    public static int health;
 }
 
