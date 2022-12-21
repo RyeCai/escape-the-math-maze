@@ -10,7 +10,7 @@ public class WinScreen : MonoBehaviour
     public Button Menu;
     public Button Submit;
     public TMP_InputField input;
-    private string name;
+    // private string name;
     // Start is called before the first frame update
     void Start()
     {
@@ -24,9 +24,9 @@ public class WinScreen : MonoBehaviour
     }
 
     void report(){
-        name = input.text;
+        // name = input.text;
     }
     void submitScore(){
-        StaticData.name = name;
+        // StaticData.name = name;
     }
 }
