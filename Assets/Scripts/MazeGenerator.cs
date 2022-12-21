@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.AI;
 public class MazeGenerator : MonoBehaviour
 {
     //public class Cell {
@@ -31,6 +32,7 @@ public class MazeGenerator : MonoBehaviour
     public GameObject fps_prefab;
     public GameObject snowman_prefab;
     public GameObject door_prefab;
+    public GameObject holder;
     public GameObject wall_prefab;
     private float wall_height;
     private float wall_length;
@@ -146,12 +148,18 @@ public class MazeGenerator : MonoBehaviour
                 {
                     GameObject wall = Instantiate(wall_prefab, new Vector3(i*wall_length, wall_height/2, j*wall_length - wall_length/2), Quaternion.identity);
                     wall.name = string.Format("HWALL {0}, {1}", i, j);
+                    wall.transform.SetParent(holder.transform);
+                    // NavMeshSurface surface = wall.GetComponent<NavMeshSurface>();
+                    // surface.BuildNavMesh ();
                 }
                 if (v_wall[i,j])
                 {
                     GameObject wall = Instantiate(wall_prefab, new Vector3(i * wall_length - wall_length/2, wall_height / 2, j * wall_length), Quaternion.identity);
                     wall.transform.Rotate(0.0f, 90.0f, 0.0f);
                     wall.name = string.Format("VWALL {0}, {1}", i, j);
+                    wall.transform.SetParent(holder.transform);
+                    // NavMeshSurface surface = wall.GetComponent<NavMeshSurface>();
+                    // surface.BuildNavMesh ();
                 }
             }
         }
