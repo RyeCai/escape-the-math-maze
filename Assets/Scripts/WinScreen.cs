@@ -8,14 +8,14 @@ using TMPro;
 public class WinScreen : MonoBehaviour
 {
     public Button Menu;
-    public Button Submit;
-    public TMP_InputField input;
+    // public Button Submit;
+    // public TMP_InputField input;
     // private string name;
     // Start is called before the first frame update
     void Start()
     {
-        input.onValueChanged.AddListener(delegate{report();});
-        Submit.onClick.AddListener(delegate{submitScore();});
+        // input.onValueChanged.AddListener(delegate{report();});
+        // Submit.onClick.AddListener(delegate{submitScore();});
         Menu.onClick.AddListener(delegate{ProcessButtonInput("MainMenu");});
     }
 
@@ -23,10 +23,10 @@ public class WinScreen : MonoBehaviour
             SceneManager.LoadScene(scene);
     }
 
-    void report(){
-        // name = input.text;
-    }
-    void submitScore(){
-        // StaticData.name = name;
-    }
+    // void report(){
+    //     // name = input.text;
+    // }
+    // void submitScore(){
+    //     // StaticData.name = name;
+    // }
 }

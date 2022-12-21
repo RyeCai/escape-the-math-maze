@@ -20,33 +20,13 @@ public class RandomMonster : MonoBehaviour
     private float zMin;
     private float timer;
 
-    //  public Vector3 RandomNavmeshLocation(float radius) {
-    //      Vector3 randomDirection = Random.insideUnitSphere * radius;
-    //      randomDirection += transform.position;
-    //      UnityEngine.AI.NavMeshHit hit;
-    //      Vector3 finalPosition = Vector3.zero;
-    //      if (UnityEngine.AI.NavMesh.SamplePosition(randomDirection, out hit, radius, 1)) {
-    //          finalPosition = hit.position;            
-    //      }
-    //      return finalPosition;
-    //  }
-
+    
     // Start is called before the first frame update
     void Start()
     {
         fps_player_obj = GameObject.FindGameObjectWithTag("PLAYER");
         radius_of_search_for_player = 10.0f;
         agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
-        // foreach (Transform vertex in plane.transform){
-        //     if(vertex.name == "TopRight"){
-        //         xMax = vertex.position.x;
-        //         zMax = vertex.position.z;
-        //     }
-        //     if(vertex.name == "BottomLeft"){
-        //         xMin = vertex.position.x;
-        //         zMin = vertex.position.z;
-        //     }
-        // }\
         xMax=64;
         xMin=0;
         zMax=64;
@@ -78,9 +58,7 @@ public class RandomMonster : MonoBehaviour
             timer -= Time.deltaTime;
             Vector3 dist = transform.position - target;
             dist.y = 0;
-            // Maybe just switch targets every so many seconds
             if(dist.magnitude < 1 || timer <= 0.0f){
-                // target = RandomNavmeshLocation(8);
                 target = new Vector3(Random.Range(xMin, xMax), 0, Random.Range(zMin, zMax));
                 agent.SetDestination(target);
                 timer = 5.0f;
