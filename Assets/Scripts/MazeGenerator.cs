@@ -5,30 +5,6 @@ using System.Linq;
 using UnityEngine.AI;
 public class MazeGenerator : MonoBehaviour
 {
-    //public class Cell {
-    //    public Cell()
-    //    {
-    //        this.visited = false;
-    //        this.top = true;
-    //        this.bot = true;
-    //        this.right = true;
-    //        this.left = true;
-    //    }
-    //    public Cell(bool visited, bool top, bool bot, bool right, bool left)
-    //    {
-    //        this.visited = visited;
-    //        this.top = top;
-    //        this.bot = bot;
-    //        this.right = right;
-    //        this.left = left;
-    //    }
-    //    public bool visited;
-    //    public bool top;
-    //    public bool bot;
-    //    public bool right;
-    //    public bool left;
-    //}
-
     public GameObject fps_prefab;
     public GameObject snowman_prefab;
     public GameObject door_prefab;
