@@ -8,12 +8,16 @@ public class MazeGenerator : MonoBehaviour
     public GameObject fps_prefab;
     public GameObject snowman_prefab;
     public GameObject door_prefab;
+    public GameObject invis_prefab;
+    public GameObject heal_prefab;
     public GameObject holder;
     public GameObject sleigh_prefab;
     public GameObject wall_prefab;
     private float wall_height;
     private float wall_length;
     private GameObject[] presents;
+    private GameObject[] snowmen;
+    private GameObject[] powerups;
 
     public int size;
     internal int remaining_problems;
@@ -127,34 +131,83 @@ public class MazeGenerator : MonoBehaviour
                 GameObject wall;
                 if (h_wall[i, j])
                 {
-                    wall = Instantiate(wall_prefab, new Vector3(i*wall_length, wall_height/2, j*wall_length - wall_length/2), Quaternion.identity);
-                    wall.name = string.Format("HWALL {0}, {1}", i, j);
-                    wall.transform.SetParent(holder.transform);
+                    
                     if (i == door_pos[0] && j == door_pos[1])
                     {
-                        wall.GetComponent<Renderer>().material.color = Color.gray;
-
+                        wall = Instantiate(door_prefab, new Vector3(i * wall_length, wall_height / 2, j * wall_length - wall_length / 2), Quaternion.identity);
+                        wall.name = "Door";
                         door_wall = wall;
+                    } else
+                    {
+                        wall = Instantiate(wall_prefab, new Vector3(i * wall_length, wall_height / 2, j * wall_length - wall_length / 2), Quaternion.identity);
+                        wall.name = string.Format("HWALL {0}, {1}", i, j);
+                        wall.transform.SetParent(holder.transform);
                     }
                 }
                 if (v_wall[i,j])
                 {
-                    wall = Instantiate(wall_prefab, new Vector3(i * wall_length - wall_length/2, wall_height / 2, j * wall_length), Quaternion.identity);
-                    wall.transform.Rotate(0.0f, 90.0f, 0.0f);
-                    wall.name = string.Format("VWALL {0}, {1}", i, j);
-                    wall.transform.SetParent(holder.transform);
-                    // Sets door
                     if (i == door_pos[0] && j == door_pos[1])
                     {
-                        wall.GetComponent<Renderer>().material.color = Color.gray;
+                        wall = Instantiate(door_prefab, new Vector3(i * wall_length, wall_height / 2, j * wall_length - wall_length / 2), Quaternion.identity);
+                        wall.name = "Door";
                         door_wall = wall;
+                    } else
+                    {
+                        wall = Instantiate(wall_prefab, new Vector3(i * wall_length - wall_length / 2, wall_height / 2, j * wall_length), Quaternion.identity);
+                        wall.name = string.Format("VWALL {0}, {1}", i, j);
+                        wall.transform.SetParent(holder.transform);
                     }
+                    wall.transform.Rotate(0.0f, 90.0f, 0.0f);
                 }
                 
             }
         }
     }
 
+    // Randomly chooses positions that are spaced out between each other and not on the player
+    int[][] RandomPositions(int num, float min_dist)
+    {
+        int min_distance = 0;
+        int[][] positions = new int[num][];
+        while (min_distance < min_dist)
+        {
+            min_distance = int.MaxValue;
+            for (int i = 0; i < num; i++)
+            {
+                int x = Random.Range(0, size - 1);
+                int y = Random.Range(0, size - 1);
+                while (Mathf.Abs(x-start[0]) + Mathf.Abs(y - start[1]) < min_dist/2)
+                {
+                    x = Random.Range(0, size - 1);
+                    y = Random.Range(0, size - 1);
+                }
+                positions[i] = new int[] { x, y };
+            }
+            for (int i = 0; i < num; i++)
+            {
+                for (int j = i + 1; j < num; j++)
+                {
+                    int cur_dist = Mathf.Abs(positions[i][0] - positions[j][0]) + Mathf.Abs(positions[i][1] - positions[j][1]);
+                    min_distance = Mathf.Min(min_distance, cur_dist);
+                }
+            }
+        }
+        return positions;
+    }
+
+    void SpawnPowerups()
+    {
+        int[][] positions = RandomPositions(6, size/4);
+
+        for (int i=0; i<2; i++)
+        {
+            Instantiate(invis_prefab, new Vector3(positions[i][0], 2.2f, positions[i][1]), Quaternion.identity);
+        }
+        for (int i=2; i<6; i++)
+        {
+            Instantiate(heal_prefab, new Vector3(positions[i][0] * wall_length, 2.2f, positions[i][1] * wall_length), Quaternion.identity);
+        }
+    }
 
     void MovePlayer()
     {
@@ -162,38 +215,27 @@ public class MazeGenerator : MonoBehaviour
         player.transform.position = new Vector3(start[0] * wall_length, wall_length, start[1] * wall_length); 
     }
 
+
     void MovePresents()
     {
-        int min_distance = 0;
-        int[][] positions = new int[presents.Length][];
-        while (min_distance < size/4)
-        {
-            min_distance = int.MaxValue;
-            for (int i = 0; i < presents.Length; i++)
-            {
-                int x = Random.Range(0, size - 1);
-                int y = Random.Range(0, size - 1);
-                while(x==start[0] && y==start[1])
-                {
-                    x = Random.Range(0, size - 1);
-                    y = Random.Range(0, size - 1);
-                }
-                positions[i] = new int[] { x, y };
-            }
-            for (int i = 0; i < presents.Length; i++)
-            {
-                for (int j = i+1; j < presents.Length; j++)
-                {
-                    int cur_dist = Mathf.Abs(positions[i][0] - positions[j][0]) + Mathf.Abs(positions[i][1] - positions[j][1]);
-                    min_distance = Mathf.Min(min_distance, cur_dist);
-                }
-            }
-        }
+        int[][] positions = RandomPositions(presents.Length, size/4);
+
         for (int i=0; i<presents.Length; i++)
         {
             GameObject present = presents[i];
             float height = present.transform.localScale[1];
             present.transform.position = new Vector3(positions[i][0] * wall_length, height / 2, positions[i][1] * wall_length);
+        }
+    }
+
+    void MoveSnowmen()
+    {
+        int[][] positions = RandomPositions(snowmen.Length, size/2);
+
+        for (int i = 0; i < snowmen.Length; i++)
+        {
+            GameObject snowman = snowmen[i];
+            snowman.transform.position = new Vector3(positions[i][0] * wall_length, 3, positions[i][1] * wall_length);
         }
     }
 
@@ -231,7 +273,9 @@ public class MazeGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+
         presents = GameObject.FindGameObjectsWithTag("probmaze");
+        snowmen = GameObject.FindGameObjectsWithTag("Enemy");
         remaining_problems = presents.Length;
         wall_length = wall_prefab.transform.localScale[0];
         wall_height = wall_prefab.transform.localScale[1];
@@ -247,6 +291,8 @@ public class MazeGenerator : MonoBehaviour
         MovePlayer();
         BuildMaze();
         MovePresents();
+        SpawnPowerups();
+        MoveSnowmen();
     }
 
     private void Update()

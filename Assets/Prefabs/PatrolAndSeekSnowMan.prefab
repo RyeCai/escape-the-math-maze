@@ -12,6 +12,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PatrolAndSeekSnowMan
       objectReference: {fileID: 0}
+    - target: {fileID: 1518822551133515830, guid: e960d80324b17da40a2f2e9825f9be4a,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     - target: {fileID: 3196753865550447828, guid: e960d80324b17da40a2f2e9825f9be4a,
         type: 3}
       propertyPath: plane

@@ -9,7 +9,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 130726, guid: a2aa58e98e281034995128f2341055c3, type: 3}
       propertyPath: m_Name
-      value: Santa_Hat
+      value: InvisibilityPowerUp
       objectReference: {fileID: 0}
     - target: {fileID: 130726, guid: a2aa58e98e281034995128f2341055c3, type: 3}
       propertyPath: m_TagString
