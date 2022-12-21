@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 448538}
   - component: {fileID: 3386984}
   - component: {fileID: 2305360}
+  - component: {fileID: 5706570418245497748}
+  - component: {fileID: 3936677186952270026}
   m_Layer: 0
   m_Name: Gift_Box_2
   m_TagString: Untagged
@@ -83,3 +85,31 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &5706570418245497748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 142898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 776c511e10a6f9b44b1985437ea43713, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  question: {fileID: 0}
+  input: {fileID: 0}
+  submit: {fileID: 0}
+--- !u!65 &3936677186952270026
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 142898}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.6150453, y: 0.8983649, z: 0.61476254}
+  m_Center: {x: 0.0011900663, y: -0.15081865, z: 0.003028512}

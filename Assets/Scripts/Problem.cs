@@ -37,7 +37,7 @@ public class Problem : MonoBehaviour
         Canvas[] panels = GameObject.FindObjectsOfType<Canvas>(true);
         foreach (Canvas pan in panels)
         {
-            if (pan.tag == "prob")
+            if (pan.tag == "ProblemCanvas")
             {
                 panel = pan;
                 break;
@@ -133,7 +133,7 @@ public class Problem : MonoBehaviour
         {
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
-            float distance = (gameObject.transform.position - fps_player_obj.gameObject.transform.position).magnitude;
+            float distance = (gameObject.transform.position - fps_player_obj.transform.position).magnitude;
             bool correctForm = int.TryParse(input.text, out int a);
             answer = correctForm ? a : answer;
             submit.onClick.RemoveAllListeners();

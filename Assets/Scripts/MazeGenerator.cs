@@ -28,9 +28,15 @@ public class MazeGenerator : MonoBehaviour
     //    public bool left;
     //}
 
+    public GameObject fps_prefab;
+    public GameObject snowman_prefab;
+    public GameObject door_prefab;
     public GameObject wall_prefab;
-    public int wall_length = 4;
-    public int size = 16;
+    private float wall_height;
+    private float wall_length;
+    private GameObject[] presents;
+
+    public int size;
     private bool[,] visited;
     private bool[,] v_wall;
     private bool[,] h_wall;
@@ -138,22 +144,67 @@ public class MazeGenerator : MonoBehaviour
             {
                 if (h_wall[i, j])
                 {
-                    GameObject wall = Instantiate(wall_prefab, new Vector3(i*wall_length, wall_length/2, j*wall_length - wall_length/2), Quaternion.identity);
+                    GameObject wall = Instantiate(wall_prefab, new Vector3(i*wall_length, wall_height/2, j*wall_length - wall_length/2), Quaternion.identity);
                     wall.name = string.Format("HWALL {0}, {1}", i, j);
                 }
                 if (v_wall[i,j])
                 {
-                    GameObject wall = Instantiate(wall_prefab, new Vector3(i * wall_length - wall_length/2, wall_length / 2, j * wall_length), Quaternion.identity);
+                    GameObject wall = Instantiate(wall_prefab, new Vector3(i * wall_length - wall_length/2, wall_height / 2, j * wall_length), Quaternion.identity);
                     wall.transform.Rotate(0.0f, 90.0f, 0.0f);
                     wall.name = string.Format("VWALL {0}, {1}", i, j);
                 }
             }
         }
     }
+
+
+    void MovePlayer()
+    {
+        GameObject player = GameObject.FindGameObjectWithTag("PLAYER");
+        player.transform.position = new Vector3(start[0] * wall_length, wall_length, start[1] * wall_length); 
+    }
+
+    void MovePresents()
+    {
+        int min_distance = 0;
+        int[][] positions = new int[presents.Length][];
+        while (min_distance < size/4)
+        {
+            min_distance = int.MaxValue;
+            for (int i = 0; i < presents.Length; i++)
+            {
+                int x = Random.Range(0, size - 1);
+                int y = Random.Range(0, size - 1);
+                while(x==start[0] && y==start[1])
+                {
+                    x = Random.Range(0, size - 1);
+                    y = Random.Range(0, size - 1);
+                }
+                positions[i] = new int[] { x, y };
+            }
+            for (int i = 0; i < presents.Length; i++)
+            {
+                for (int j = i+1; j < presents.Length; j++)
+                {
+                    int cur_dist = Mathf.Abs(positions[i][0] - positions[j][0]) + Mathf.Abs(positions[i][1] - positions[j][1]);
+                    min_distance = Mathf.Min(min_distance, cur_dist);
+                }
+            }
+        }
+        for (int i=0; i<presents.Length; i++)
+        {
+            GameObject present = presents[i];
+            float height = present.transform.localScale[1];
+            present.transform.position = new Vector3(positions[i][0] * wall_length, height / 2, positions[i][1] * wall_length);
+        }
+    }
     
     // Start is called before the first frame update
     void Start()
     {
+        presents = GameObject.FindGameObjectsWithTag("probmaze");
+        wall_length = wall_prefab.transform.localScale[0];
+        wall_height = wall_prefab.transform.localScale[1];
         visited = new bool[size, size];
         h_wall = new bool[size+1, size+1];
         v_wall = new bool[size+1, size+1];
@@ -169,7 +220,7 @@ public class MazeGenerator : MonoBehaviour
                 h_wall[door_pos[0], door_pos[1]] = false;
                 break;
             case 1:
-                door_pos = new int[] { size-1, Random.Range(0, size) };
+                door_pos = new int[] { size, Random.Range(0, size) };
                 v_wall[door_pos[0], door_pos[1]] = false;
                 break;
             case 2:
@@ -182,6 +233,8 @@ public class MazeGenerator : MonoBehaviour
                 break;
         }
         DepthFirst();
+        MovePlayer();
         BuildMaze();
+        MovePresents();
     }
 }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 0.477
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 0.477}
+  m_IndirectSpecularColor: {r: 0.25949544, g: 0.26509354, b: 0.24892303, a: 0.477}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &4
 LightmapSettings:
@@ -496,7 +496,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 19886828, guid: a683bfbbfaf93ca46beefd0d0ca19b1f, type: 3}
       propertyPath: ShapeModule.angle
-      value: 17.1845245
+      value: 17.184525
+      objectReference: {fileID: 0}
+    - target: {fileID: 19886828, guid: a683bfbbfaf93ca46beefd0d0ca19b1f, type: 3}
+      propertyPath: InitialModule.startSizeY.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19886828, guid: a683bfbbfaf93ca46beefd0d0ca19b1f, type: 3}
+      propertyPath: InitialModule.startSizeZ.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19886828, guid: a683bfbbfaf93ca46beefd0d0ca19b1f, type: 3}
+      propertyPath: InitialModule.startRotationX.minMaxState
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 19886828, guid: a683bfbbfaf93ca46beefd0d0ca19b1f, type: 3}
+      propertyPath: InitialModule.startRotationY.minMaxState
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a683bfbbfaf93ca46beefd0d0ca19b1f, type: 3}
@@ -1447,6 +1463,11 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5706570418245497748, guid: 2c69c93d45f9449488dbb88be91cd0a5,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2c69c93d45f9449488dbb88be91cd0a5, type: 3}
 --- !u!1 &1456872527
@@ -1819,6 +1840,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 434110, guid: 24b4c5dc305499e44b4cdfad4149b9b6, type: 3}
       propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7740440894789313624, guid: 24b4c5dc305499e44b4cdfad4149b9b6,
+        type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
