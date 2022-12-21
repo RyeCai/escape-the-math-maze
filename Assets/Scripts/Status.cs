@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
+
 public class Status : MonoBehaviour
 {
 
@@ -13,11 +15,14 @@ public class Status : MonoBehaviour
     public Image[] hearts;
     public Sprite heart;
     public Sprite emptyHeart;
+    public TMP_Text time;
     private float waitTime;
     private float powerUpDuration;
     // Start is called before the first frame update
     void Start()
-    {
+    {   
+        StaticData.time = 0.0f;
+        time.text = "Time: " + StaticData.time.ToString("0.00");
         powerUpDuration = 0.0f;
         StaticData.health = 3;
         waitTime = 0;
@@ -30,6 +35,8 @@ public class Status : MonoBehaviour
     // Update is called once per frame
     void Update()
     {   
+        StaticData.time += Time.deltaTime;
+        time.text = "Time: " + StaticData.time.ToString("0.00");
         StaticData.health = health;
         if(StaticData.health <= 0){
             LoseScreen.enabled = true;

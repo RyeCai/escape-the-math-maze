@@ -16,4 +16,6 @@ public class MenuScript : MonoBehaviour
     void ProcessButtonInput(string scene){
             SceneManager.LoadScene(scene);
     }
+    void leaderBoard(){
+    }
 }
