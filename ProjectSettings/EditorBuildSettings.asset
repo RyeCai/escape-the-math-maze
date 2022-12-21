@@ -9,12 +9,12 @@ EditorBuildSettings:
     path: Assets/Scenes/start.unity
     guid: 74cda79c601e61a44ae9cd7eefadc603
   - enabled: 1
-    path: Assets/Scenes/level.unity
-    guid: 859055b1cf8f6bc43bc2876df96bbccd
-  - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: 08723137c2265ea4e93c2037fb415a81
   - enabled: 1
     path: Assets/Scenes/playground.unity
     guid: 9ab955368967f8e4e953a949130d3627
+  - enabled: 1
+    path: Assets/Asset Store/Minimalist Christmas/Demo/WinScreen.unity
+    guid: 5cc3104033cf7954a988a024e9d9a240
   m_configObjects: {}

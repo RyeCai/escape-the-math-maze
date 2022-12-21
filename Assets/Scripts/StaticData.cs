@@ -16,5 +16,6 @@ public class StaticData
     public static bool invisible;
     public static int health;
     public static float time;
+    public static string name;
 }
 

@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 using System.Globalization;
 using TMPro;
 using UnityStandardAssets.Characters.FirstPerson;
+using UnityEngine.SceneManagement;
 
 public class Problem : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class Problem : MonoBehaviour
     private AudioSource source;
     private AudioClip win_sound;
     public TMP_Text question;
+    public TMP_Text prompt;
     public TMP_InputField input;
     private TMP_Text placehold; 
     public Button submit;
@@ -25,8 +27,9 @@ public class Problem : MonoBehaviour
     private int solution;
     private bool solved;
     // public GameObject panel;
-    
+
     // Use this for initialization
+    private bool hardest_problem;
     private int operand1;
     private int operand2;
     private string arith_operator;
@@ -52,10 +55,10 @@ public class Problem : MonoBehaviour
         cursor = fps_player_obj.GetComponent<RigidbodyFirstPersonController>().mouseLook;
         solved = false;
 
-        bool hardest_problem = gameObject.tag == "door";
-        operand1 = hardest_problem ? Random.Range(3, 20) : Random.Range(2, 9);
-        operand2 = hardest_problem ? Random.Range(3, 20) : Random.Range(2, 9);
-        arith_operator = arith_operator_types[Random.Range(0, 3)];
+        hardest_problem = gameObject.tag == "Hard";
+        operand1 = hardest_problem ? Random.Range(6, 20) : Random.Range(2, 9);
+        operand2 = hardest_problem ? Random.Range(6, 20) : Random.Range(2, 9);
+        arith_operator = arith_operator_types[hardest_problem ? Random.Range(2, 3) : Random.Range(0, 3)];
 
         switch (arith_operator)
         {
@@ -88,7 +91,6 @@ public class Problem : MonoBehaviour
     {
         if (collision.gameObject.name == "PLAYER" && !solved)
         {
-            //Debug.Log("oop");
             touching = true;
             question.text = operand1.ToString() + " " + arith_operator +  " " + operand2.ToString();
             panel.gameObject.SetActive(true);
@@ -97,6 +99,10 @@ public class Problem : MonoBehaviour
             placehold.text = "Answer";
             placehold.color = gray;
             cursor.SetCursorLock(false);
+            if (hardest_problem)
+            {
+                prompt.text = "Enter the Code to your Sleigh:";
+            }
         }
     }
 
@@ -108,6 +114,10 @@ public class Problem : MonoBehaviour
             solved = true;
             panel.gameObject.SetActive(false);
             touching = false;
+            if (hardest_problem)
+            {
+                SceneManager.LoadScene(3);
+            }
             Destroy(gameObject);
         } else{
             input.text = "";

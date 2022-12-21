@@ -12,6 +12,7 @@ TagManager:
   - probmaze
   - Enemy
   - Heal
+  - Hard
   layers:
   - Default
   - TransparentFX

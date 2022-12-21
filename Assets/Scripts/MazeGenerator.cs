@@ -148,7 +148,7 @@ public class MazeGenerator : MonoBehaviour
                 {
                     if (i == door_pos[0] && j == door_pos[1])
                     {
-                        wall = Instantiate(door_prefab, new Vector3(i * wall_length, wall_height / 2, j * wall_length - wall_length / 2), Quaternion.identity);
+                        wall = Instantiate(door_prefab, new Vector3(i * wall_length - wall_length / 2, wall_height / 2, j * wall_length), Quaternion.identity);
                         wall.name = "Door";
                         door_wall = wall;
                     } else
