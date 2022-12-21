@@ -11,6 +11,7 @@ TagManager:
   - Invisible
   - probmaze
   - Enemy
+  - Heal
   layers:
   - Default
   - TransparentFX

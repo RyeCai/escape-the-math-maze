@@ -57,6 +57,8 @@ public class LoseScreen : MonoBehaviour
         foreach(GameObject go in powerUps){
             GameObject goo = go;
         }
+        StaticData.health = 3;
+        StaticData.invisible = false;
         this.enabled = false;
 
 
