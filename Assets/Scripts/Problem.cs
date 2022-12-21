@@ -11,6 +11,7 @@ public class Problem : MonoBehaviour
 {
 
     private GameObject fps_player_obj;
+    private MouseLook cursor;
     private Level level;
     private AudioSource source;
     private AudioClip win_sound;
@@ -44,17 +45,13 @@ public class Problem : MonoBehaviour
                 break;
             }
         }
+
         placehold = input.placeholder.GetComponent<TMP_Text>();
         touching = false;
         fps_player_obj = GameObject.FindGameObjectWithTag("PLAYER");
-        
+        cursor = fps_player_obj.GetComponent<RigidbodyFirstPersonController>().mouseLook;
         solved = false;
-        //panel = GameObject.Instantiate(prob) as GameObject;
 
-        //panel.gameObject.SetActive(true);
-        //panel.transform.SetParent(problems.transform,false);
-
-        //Generate random math problem
         bool hardest_problem = gameObject.tag == "door";
         operand1 = hardest_problem ? Random.Range(3, 20) : Random.Range(2, 9);
         operand2 = hardest_problem ? Random.Range(3, 20) : Random.Range(2, 9);
@@ -83,12 +80,6 @@ public class Problem : MonoBehaviour
                 arith_operator = "÷";
                 break;
         }
-
-        //if (level == null)
-        //{
-        //    Debug.LogError("Internal error: could not find the Level object - did you remove its 'Level' tag?");
-        //    return;
-        //}
         
         panel.gameObject.SetActive(false);
     }
@@ -105,9 +96,7 @@ public class Problem : MonoBehaviour
             input.ActivateInputField();
             placehold.text = "Answer";
             placehold.color = gray;
-            //Cursor.visible = true;
-            //Cursor.lockState = CursorLockMode.None;
-            fps_player_obj.GetComponent<RigidbodyFirstPersonController>().mouseLook.SetCursorLock(false);
+            cursor.SetCursorLock(false);
         }
     }
 
@@ -115,12 +104,11 @@ public class Problem : MonoBehaviour
     private void SubmitAnswer(){
         
         if (answer == solution){
-            fps_player_obj.GetComponent<RigidbodyFirstPersonController>().mouseLook.SetCursorLock(true);
+            cursor.SetCursorLock(true);
             solved = true;
             panel.gameObject.SetActive(false);
             touching = false;
             Destroy(gameObject);
-            //gameObject.GetComponent<Renderer>().material.color = Color.green;
         } else{
             input.text = "";
             placehold.text = "Incorrect";
@@ -132,8 +120,6 @@ public class Problem : MonoBehaviour
     {
         if (panel.gameObject.activeSelf && touching)
         {
-            //Cursor.visible = true;
-            //Cursor.lockState = CursorLockMode.None;
             float distance = (gameObject.transform.position - fps_player_obj.transform.position).magnitude;
             bool correctForm = int.TryParse(input.text, out int a);
             answer = correctForm ? a : answer;
@@ -141,7 +127,7 @@ public class Problem : MonoBehaviour
             submit.onClick.AddListener(SubmitAnswer);
             if (distance > 2 || Input.GetKeyDown(KeyCode.Escape) || Input.GetMouseButtonDown(1))
             {
-                fps_player_obj.GetComponent<RigidbodyFirstPersonController>().mouseLook.SetCursorLock(true);
+                cursor.SetCursorLock(true);
                 panel.gameObject.SetActive(false);
                 touching = false;  
             } else if (Input.GetKeyUp(KeyCode.Return))

@@ -33,15 +33,6 @@ public class LoseScreen : MonoBehaviour
         Restart.onClick.AddListener(delegate{reset(startPositions, powerUps, problems);});
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if(this.enabled){
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
-        }
-    }
-
     private void reset(List<Vector3> startPositions, List<GameObject> powerUps, List<GameObject> problems){
         GameObject[] gameObjects = FindObjectsOfType<GameObject>();
         int i = 0;

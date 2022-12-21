@@ -6,11 +6,11 @@ TagManager:
   tags:
   - Level
   - ProblemCanvas
-  - prob
   - PLAYER
   - Invisible
   - probmaze
   - Enemy
+  - prob
   layers:
   - Default
   - TransparentFX

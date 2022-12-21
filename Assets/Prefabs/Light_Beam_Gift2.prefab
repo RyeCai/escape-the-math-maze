@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5706570418245497748}
   - component: {fileID: 3936677186952270026}
   m_Layer: 0
-  m_Name: Gift_Box_2
+  m_Name: Light_Beam_Gift2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

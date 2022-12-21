@@ -33,6 +33,8 @@ public class Status : MonoBehaviour
         StaticData.health = health;
         if(StaticData.health <= 0){
             LoseScreen.enabled = true;
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
         }
         waitTime -= Time.deltaTime;
         for(int i = 0; i < hearts.Length; i++){
@@ -70,7 +72,7 @@ public class Status : MonoBehaviour
         if(collision.gameObject.tag == "Invisible"){
             indicator.enabled = true;
             StaticData.invisible = true;
-            powerUpDuration = 5.0f;
+            powerUpDuration = 12.0f;
             Destroy(collision.gameObject);
         }
     }
