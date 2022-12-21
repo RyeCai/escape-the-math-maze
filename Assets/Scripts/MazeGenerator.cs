@@ -9,18 +9,22 @@ public class MazeGenerator : MonoBehaviour
     public GameObject snowman_prefab;
     public GameObject door_prefab;
     public GameObject holder;
+    public GameObject sleigh_prefab;
     public GameObject wall_prefab;
     private float wall_height;
     private float wall_length;
     private GameObject[] presents;
 
     public int size;
+    internal int remaining_problems;
     private bool[,] visited;
     private bool[,] v_wall;
     private bool[,] h_wall;
     private int[] start;
     private int exit_side;
     private int[] door_pos;
+    private GameObject door_wall;
+    private bool opened;
     Stack<int[]> stack = new Stack<int[]>();
     
     void FillMaze()
@@ -120,23 +124,33 @@ public class MazeGenerator : MonoBehaviour
         {
             for (int j = 0; j < size+1; j++)
             {
+                GameObject wall;
                 if (h_wall[i, j])
                 {
-                    GameObject wall = Instantiate(wall_prefab, new Vector3(i*wall_length, wall_height/2, j*wall_length - wall_length/2), Quaternion.identity);
+                    wall = Instantiate(wall_prefab, new Vector3(i*wall_length, wall_height/2, j*wall_length - wall_length/2), Quaternion.identity);
                     wall.name = string.Format("HWALL {0}, {1}", i, j);
                     wall.transform.SetParent(holder.transform);
-                    // NavMeshSurface surface = wall.GetComponent<NavMeshSurface>();
-                    // surface.BuildNavMesh ();
+                    if (i == door_pos[0] && j == door_pos[1])
+                    {
+                        wall.GetComponent<Renderer>().material.color = Color.gray;
+
+                        door_wall = wall;
+                    }
                 }
                 if (v_wall[i,j])
                 {
-                    GameObject wall = Instantiate(wall_prefab, new Vector3(i * wall_length - wall_length/2, wall_height / 2, j * wall_length), Quaternion.identity);
+                    wall = Instantiate(wall_prefab, new Vector3(i * wall_length - wall_length/2, wall_height / 2, j * wall_length), Quaternion.identity);
                     wall.transform.Rotate(0.0f, 90.0f, 0.0f);
                     wall.name = string.Format("VWALL {0}, {1}", i, j);
                     wall.transform.SetParent(holder.transform);
-                    // NavMeshSurface surface = wall.GetComponent<NavMeshSurface>();
-                    // surface.BuildNavMesh ();
+                    // Sets door
+                    if (i == door_pos[0] && j == door_pos[1])
+                    {
+                        wall.GetComponent<Renderer>().material.color = Color.gray;
+                        door_wall = wall;
+                    }
                 }
+                
             }
         }
     }
@@ -182,43 +196,68 @@ public class MazeGenerator : MonoBehaviour
             present.transform.position = new Vector3(positions[i][0] * wall_length, height / 2, positions[i][1] * wall_length);
         }
     }
-    
-    // Start is called before the first frame update
-    void Start()
+
+    void MoveSleigh()
     {
-        presents = GameObject.FindGameObjectsWithTag("probmaze");
-        wall_length = wall_prefab.transform.localScale[0];
-        wall_height = wall_prefab.transform.localScale[1];
-        visited = new bool[size, size];
-        h_wall = new bool[size+1, size+1];
-        v_wall = new bool[size+1, size+1];
-        FillMaze();
-        start = new int[] { Random.Range(0, size-1), Random.Range(0, size-1) };
-        exit_side = Random.Range(0, 3);
-        
+        float sleigh_width = sleigh_prefab.transform.localScale.y;
         // 0 Top/North, 1 Right/East, 2 Bottom/South, 3 Left/West
         switch (exit_side)
         {
             case 0:
                 door_pos = new int[] { Random.Range(0, size), size };
-                h_wall[door_pos[0], door_pos[1]] = false;
+                sleigh_prefab.transform.position = new Vector3(door_pos[0] * wall_length , sleigh_prefab.transform.localScale[1] / 2, size * wall_length - wall_length / 2 + sleigh_width);
+                //h_wall[door_pos[0], door_pos[1]] = false;
                 break;
             case 1:
                 door_pos = new int[] { size, Random.Range(0, size) };
-                v_wall[door_pos[0], door_pos[1]] = false;
+                sleigh_prefab.transform.position = new Vector3(size * wall_length - wall_length / 2 + sleigh_width, sleigh_prefab.transform.localScale[1] / 2, door_pos[1] * wall_length );
+                sleigh_prefab.transform.localRotation = Quaternion.Euler(-90.0f, 90.0f, 0.0f);
+                //v_wall[door_pos[0], door_pos[1]] = false;
                 break;
             case 2:
                 door_pos = new int[] { Random.Range(0, size), 0 };
-                h_wall[door_pos[0], door_pos[1]] = false;
+                sleigh_prefab.transform.position = new Vector3(door_pos[0] * wall_length, sleigh_prefab.transform.localScale[1] / 2, -sleigh_width - wall_length / 2);
+                //h_wall[door_pos[0], door_pos[1]] = false;
                 break;
             case 3:
                 door_pos = new int[] { 0, Random.Range(0, size) };
-                v_wall[door_pos[0], door_pos[1]] = false;
+                sleigh_prefab.transform.position = new Vector3(-sleigh_width/2 - wall_length / 2, sleigh_prefab.transform.localScale[1] / 2, door_pos[1] * wall_length);
+                sleigh_prefab.transform.localRotation = Quaternion.Euler(-90.0f, -90.0f, 0.0f);
+                //v_wall[door_pos[0], door_pos[1]] = false;
                 break;
         }
+    }
+    
+    // Start is called before the first frame update
+    void Start()
+    {
+        presents = GameObject.FindGameObjectsWithTag("probmaze");
+        remaining_problems = presents.Length;
+        wall_length = wall_prefab.transform.localScale[0];
+        wall_height = wall_prefab.transform.localScale[1];
+        visited = new bool[size, size];
+        h_wall = new bool[size+1, size+1];
+        v_wall = new bool[size+1, size+1];
+        opened = false;
+        FillMaze();
+        start = new int[] { Random.Range(0, size-1), Random.Range(0, size-1) };
+        exit_side = Random.Range(0, 3);       
         DepthFirst();
+        MoveSleigh();
         MovePlayer();
         BuildMaze();
         MovePresents();
+    }
+
+    private void Update()
+    {
+        presents = GameObject.FindGameObjectsWithTag("probmaze");
+        remaining_problems = presents.Length;
+        if (remaining_problems == 0 && !opened)
+        {
+            Vector3 d_pos = door_wall.transform.position;
+            if (d_pos[1] < -wall_height / 2) opened = true;
+            door_wall.transform.position = new Vector3(d_pos[0], d_pos[1] - Time.deltaTime * 0.4f, d_pos[2]);
+        } 
     }
 }

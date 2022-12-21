@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems; 
 using System.Globalization;
 using TMPro;
+using UnityStandardAssets.Characters.FirstPerson;
 
 public class Problem : MonoBehaviour
 {
@@ -46,10 +47,7 @@ public class Problem : MonoBehaviour
         placehold = input.placeholder.GetComponent<TMP_Text>();
         touching = false;
         fps_player_obj = GameObject.FindGameObjectWithTag("PLAYER");
-        //GameObject level_obj = GameObject.FindGameObjectWithTag("Level");
-        //level = level_obj.GetComponent<Level>();
-        //GameObject canvas_obj = GameObject.FindGameObjectWithTag("ProblemCanvas");
-        //problems = canvas_obj.GetComponent<Canvas>();
+        
         solved = false;
         //panel = GameObject.Instantiate(prob) as GameObject;
 
@@ -107,8 +105,9 @@ public class Problem : MonoBehaviour
             input.ActivateInputField();
             placehold.text = "Answer";
             placehold.color = gray;
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
+            //Cursor.visible = true;
+            //Cursor.lockState = CursorLockMode.None;
+            fps_player_obj.GetComponent<RigidbodyFirstPersonController>().mouseLook.SetCursorLock(false);
         }
     }
 
@@ -116,10 +115,12 @@ public class Problem : MonoBehaviour
     private void SubmitAnswer(){
         
         if (answer == solution){
+            fps_player_obj.GetComponent<RigidbodyFirstPersonController>().mouseLook.SetCursorLock(true);
             solved = true;
-            gameObject.GetComponent<Renderer>().material.color = Color.green;
             panel.gameObject.SetActive(false);
             touching = false;
+            Destroy(gameObject);
+            //gameObject.GetComponent<Renderer>().material.color = Color.green;
         } else{
             input.text = "";
             placehold.text = "Incorrect";
@@ -131,8 +132,8 @@ public class Problem : MonoBehaviour
     {
         if (panel.gameObject.activeSelf && touching)
         {
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
+            //Cursor.visible = true;
+            //Cursor.lockState = CursorLockMode.None;
             float distance = (gameObject.transform.position - fps_player_obj.transform.position).magnitude;
             bool correctForm = int.TryParse(input.text, out int a);
             answer = correctForm ? a : answer;
@@ -140,6 +141,7 @@ public class Problem : MonoBehaviour
             submit.onClick.AddListener(SubmitAnswer);
             if (distance > 2 || Input.GetKeyDown(KeyCode.Escape) || Input.GetMouseButtonDown(1))
             {
+                fps_player_obj.GetComponent<RigidbodyFirstPersonController>().mouseLook.SetCursorLock(true);
                 panel.gameObject.SetActive(false);
                 touching = false;  
             } else if (Input.GetKeyUp(KeyCode.Return))
