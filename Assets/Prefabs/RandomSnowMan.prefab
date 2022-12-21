@@ -91,6 +91,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Snow Man_01
       objectReference: {fileID: 0}
+    - target: {fileID: 3665448684949034829, guid: 668caeef3f091244986846c489fc2dd6,
+        type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     - target: {fileID: 4149392523460021751, guid: 668caeef3f091244986846c489fc2dd6,
         type: 3}
       propertyPath: m_RootOrder
