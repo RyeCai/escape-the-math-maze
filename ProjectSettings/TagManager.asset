@@ -10,6 +10,7 @@ TagManager:
   - PLAYER
   - Invisible
   - probmaze
+  - Enemy
   layers:
   - Default
   - TransparentFX
