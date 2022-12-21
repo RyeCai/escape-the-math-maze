@@ -53,7 +53,7 @@ public class RandomMonster : MonoBehaviour
         zMin=0;
         target = new Vector3(Random.Range(xMin, xMax), 0, Random.Range(zMin, zMax));
         // target = RandomNavmeshLocation(8);
-        agent.SetDestination(target);
+        // agent.SetDestination(target);
         timer = 5.0f;
         animation_controller = GetComponent<Animator>();
     }

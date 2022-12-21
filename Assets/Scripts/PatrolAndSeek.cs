@@ -19,6 +19,7 @@ public class PatrolAndSeek : MonoBehaviour
     private float xMin;
     private float zMax;
     private float zMin;
+    private float waitTime;
     // Start is called before the first frame update
     void Start()
     {
@@ -42,27 +43,34 @@ public class PatrolAndSeek : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        distToPlayer = transform.position - fps_player_obj.transform.position;
-        distToPlayer.y = 0;
-        dirToPlayer = fps_player_obj.transform.position - transform.position;
-        dirToPlayer.Normalize();
-        var dot = Vector3.Dot(dirToPlayer, transform.forward);
-        RaycastHit hit;
-        // if player is in sight
-        if(distToPlayer.magnitude > 1 && distToPlayer.magnitude < radius_of_search_for_player && dot > 0.707 && Physics.Raycast(transform.position, dirToPlayer, out hit) && hit.collider.tag == "PLAYER" && !StaticData.invisible){
-        // if(!StaticData.invisible){
-        agent.SetDestination(fps_player_obj.transform.position);
-            // Debug.Log("sighted");
-        }else{
-            agent.SetDestination(target);
-            Vector3 dist = transform.position - target;
-            dist.y = 0;
-            if(dist.magnitude < 1){
-                index = (index + 1) % points.Length;
-                target = points[index];
+        waitTime -= Time.deltaTime;
+        if(waitTime > 0.0){
+
+            distToPlayer = transform.position - fps_player_obj.transform.position;
+            distToPlayer.y = 0;
+            dirToPlayer = fps_player_obj.transform.position - transform.position;
+            dirToPlayer.Normalize();
+            var dot = Vector3.Dot(dirToPlayer, transform.forward);
+            RaycastHit hit;
+            // if player is in sight
+            if(distToPlayer.magnitude > 1 && distToPlayer.magnitude < radius_of_search_for_player && dot > 0.707 && Physics.Raycast(transform.position, dirToPlayer, out hit) && hit.collider.tag == "PLAYER" && !StaticData.invisible){
+            // if(!StaticData.invisible){
+                agent.SetDestination(fps_player_obj.transform.position);
+                // Debug.Log("sighted");
+            }else if(distToPlayer.magnitude <= 1){
+                waitTime = 2;
+                agent.SetDestination(transform.position);
+            }else{
                 agent.SetDestination(target);
-            }
-        }      
+                Vector3 dist = transform.position - target;
+                dist.y = 0;
+                if(dist.magnitude < 1){
+                    index = (index + 1) % points.Length;
+                    target = points[index];
+                    agent.SetDestination(target);
+                }
+            } 
+        }     
     }
 
 
