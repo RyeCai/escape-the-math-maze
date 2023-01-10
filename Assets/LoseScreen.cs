@@ -30,31 +30,35 @@ public class LoseScreen : MonoBehaviour
             }
         }
         MainMenu.onClick.AddListener(delegate{ProcessButtonInput("MainMenu");});
-        Restart.onClick.AddListener(delegate{reset(startPositions, powerUps, problems);});
+        Restart.onClick.AddListener(delegate{ProcessButtonInput("Maze");});
     }
 
-    private void reset(List<Vector3> startPositions, List<GameObject> powerUps, List<GameObject> problems){
-        GameObject[] gameObjects = FindObjectsOfType<GameObject>();
-        int i = 0;
-        foreach (GameObject go in gameObjects){
-            if (go.tag == "Enemy" || go.tag == "PLAYER"){
-                go.transform.position = startPositions[i];
-                i++;
-            }
-            // if (go.name.Contains("Gift_Box")){
-            //     go.solved = false;
-            // }
-        }
-        foreach(GameObject go in powerUps){
-            GameObject goo = go;
-        }
+    //private void reset(List<Vector3> startPositions, List<GameObject> powerUps, List<GameObject> problems){
+    //    GameObject[] gameObjects = FindObjectsOfType<GameObject>();
+    //    int i = 0;
+    //    foreach (GameObject go in gameObjects){
+    //        if (go.tag == "Enemy" || go.tag == "PLAYER"){
+    //            go.transform.position = startPositions[i];
+    //            i++;
+    //        }
+    //        // if (go.name.Contains("Gift_Box")){
+    //        //     go.solved = false;
+    //        // }
+    //    }
+    //    foreach(GameObject go in powerUps){
+    //        GameObject goo = go;
+    //    }
+    //    StaticData.health = 3;
+    //    StaticData.invisible = false;
+    //    this.enabled = false;
+
+
+    //}
+
+    void ProcessButtonInput(string scene){
+        gameObject.SetActive(false);
         StaticData.health = 3;
         StaticData.invisible = false;
-        this.enabled = false;
-
-
-    }
-    void ProcessButtonInput(string scene){
-            SceneManager.LoadScene(scene);
+        SceneManager.LoadScene(scene);
     }
 }

@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using UnityEngine.AI;
+using TMPro;
 public class MazeGenerator : MonoBehaviour
 {
-    public GameObject fps_prefab;
+    public AudioSource door_sound;
     public GameObject snowman_prefab;
     public GameObject door_prefab;
     public GameObject invis_prefab;
@@ -13,11 +13,11 @@ public class MazeGenerator : MonoBehaviour
     public GameObject holder;
     public GameObject sleigh_prefab;
     public GameObject wall_prefab;
+    public TMP_Text present_info;
     private float wall_height;
     private float wall_length;
     private GameObject[] presents;
     private GameObject[] snowmen;
-    private GameObject[] powerups;
 
     public int size;
     internal int remaining_problems;
@@ -29,6 +29,7 @@ public class MazeGenerator : MonoBehaviour
     private int[] door_pos;
     private GameObject door_wall;
     private bool opened;
+    private bool played_open;
     Stack<int[]> stack = new Stack<int[]>();
     
     void FillMaze()
@@ -201,11 +202,12 @@ public class MazeGenerator : MonoBehaviour
 
         for (int i=0; i<2; i++)
         {
-            Instantiate(invis_prefab, new Vector3(positions[i][0], 2.2f, positions[i][1]), Quaternion.identity);
+            GameObject invis = Instantiate(invis_prefab, new Vector3(positions[i][0]* wall_length, 2.2f, positions[i][1] * wall_length), Quaternion.identity);
         }
         for (int i=2; i<6; i++)
         {
-            Instantiate(heal_prefab, new Vector3(positions[i][0] * wall_length, 2.2f, positions[i][1] * wall_length), Quaternion.identity);
+            GameObject heal = Instantiate(heal_prefab, new Vector3(positions[i][0] * wall_length, 2.2f, positions[i][1] * wall_length), Quaternion.identity);
+            heal.tag = "Heal";
         }
     }
 
@@ -273,7 +275,7 @@ public class MazeGenerator : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
+        played_open = false;
         presents = GameObject.FindGameObjectsWithTag("probmaze");
         snowmen = GameObject.FindGameObjectsWithTag("Enemy");
         remaining_problems = presents.Length;
@@ -299,11 +301,23 @@ public class MazeGenerator : MonoBehaviour
     {
         presents = GameObject.FindGameObjectsWithTag("probmaze");
         remaining_problems = presents.Length;
-        if (remaining_problems == 0 && !opened)
+        if (remaining_problems == 0)
         {
-            Vector3 d_pos = door_wall.transform.position;
-            if (d_pos[1] < -wall_height / 2) opened = true;
-            door_wall.transform.position = new Vector3(d_pos[0], d_pos[1] - Time.deltaTime * 0.4f, d_pos[2]);
-        } 
+            if(!played_open)
+            {
+                played_open = true;
+                door_sound.Play();
+            }
+            present_info.text = "A Secret Door Has Opened!";
+            if (!opened)
+            {
+                Vector3 d_pos = door_wall.transform.position;
+                door_wall.transform.position = new Vector3(d_pos[0], d_pos[1] - Time.deltaTime * 0.4f, d_pos[2]);
+                if (d_pos[1] < -wall_height / 2) opened = true;
+            }
+        } else
+        {
+            present_info.text = string.Format("Presents Left: {0}", remaining_problems);
+        }
     }
 }

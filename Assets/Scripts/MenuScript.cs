@@ -27,7 +27,7 @@ public class MenuScript : MonoBehaviour
         // leaderBoard.enabled = false;
         // Play.onClick.AddListener(delegate{openLeaderBoard();});
         // Play.onClick.AddListener(delegate{leaderBoard.enabled = false;});
-        Play.onClick.AddListener(delegate{ProcessButtonInput("playground");});
+        Play.onClick.AddListener(delegate{ProcessButtonInput("Maze");});
     }
 
 

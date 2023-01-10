@@ -8,6 +8,10 @@ using TMPro;
 public class Status : MonoBehaviour
 {
 
+    public AudioSource hit_sound;
+    public AudioSource invis_sound;
+    public AudioSource heal_sound;
+    public AudioSource lose_sound;
     public int health;
     public Canvas LoseScreen;
     public Canvas indicator;
@@ -29,7 +33,7 @@ public class Status : MonoBehaviour
         for(int i = 0; i < hearts.Length; i++){
             hearts[i].sprite = heart;
         }
-        LoseScreen.enabled = false;
+        LoseScreen.gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -39,7 +43,8 @@ public class Status : MonoBehaviour
         // time.text = "Time: " + StaticData.time.ToString("0.00");
         StaticData.health = health;
         if(StaticData.health <= 0){
-            LoseScreen.enabled = true;
+            lose_sound.Play();
+            LoseScreen.gameObject.SetActive(true);
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
         }
@@ -66,6 +71,7 @@ public class Status : MonoBehaviour
         Debug.Log(collision.gameObject.tag);
         if(waitTime <= 0){
             if(collision.gameObject.tag == "Enemy"){
+                hit_sound.Play();
                 for(int i = hearts.Length-1; i > -1; i--){
                     if(hearts[i].enabled && hearts[i].sprite == heart){
                         hearts[i].sprite = emptyHeart;
@@ -77,12 +83,14 @@ public class Status : MonoBehaviour
             }
         }
         if(collision.gameObject.tag == "Invisible"){
+            invis_sound.Play();
             indicator.enabled = true;
             StaticData.invisible = true;
             powerUpDuration = 12.0f;
             Destroy(collision.gameObject);
         }
         if(collision.gameObject.tag == "Heal" && health<3){
+            heal_sound.Play();
             health++;
             Destroy(collision.gameObject);
         }

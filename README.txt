@@ -19,6 +19,14 @@ Assets:
 Creepy Snowman: https://assetstore.unity.com/packages/3d/characters/creatures/creepy-snowman-pbr-207721
 Minimalist Christmas: https://assetstore.unity.com/packages/3d/environments/minimalist-christmas-50549
 
+Ryan Cai:
+MazeGenerator.cs: Using iterative depth first search, I generated the maze and made some post processing changes for powerup positions and enemy start positions.
+Problem.cs: Generates a problem on a present object or sleigh object. 
+All sound effects
+UI functionality
+Displaying number of presents
+
+
 Jayden Nambu:
 
 Enemy AI in RandomMonster.cs and PatrolAndSeek.cs, prefabs from Creepy Snowman,

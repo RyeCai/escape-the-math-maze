@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class RandomMonster : MonoBehaviour
 {
+    public AudioSource sighted_sound;
     private Animator animation_controller;
     UnityEngine.AI.NavMeshAgent agent;
     private Vector3 target;
@@ -52,7 +53,7 @@ public class RandomMonster : MonoBehaviour
         // if(!StaticData.invisible && distToPlayer.magnitude > 1){
             // target = fps_player_obj.transform.position;
             agent.SetDestination(fps_player_obj.transform.position);
-            Debug.Log("sighted");
+            sighted_sound.Play();
         }else{
             agent.SetDestination(target);
             timer -= Time.deltaTime;

@@ -11,11 +11,10 @@ using UnityEngine.SceneManagement;
 public class Problem : MonoBehaviour
 {
 
+    public AudioSource correct_sound;
+    public AudioSource incorrect_sound;
     private GameObject fps_player_obj;
     private MouseLook cursor;
-    private Level level;
-    private AudioSource source;
-    private AudioClip win_sound;
     public TMP_Text question;
     public TMP_Text prompt;
     public TMP_InputField input;
@@ -89,7 +88,7 @@ public class Problem : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.name == "PLAYER" && !solved)
+        if (collision.gameObject.tag == "PLAYER" && !solved)
         {
             touching = true;
             question.text = operand1.ToString() + " " + arith_operator +  " " + operand2.ToString();
@@ -110,16 +109,18 @@ public class Problem : MonoBehaviour
     private void SubmitAnswer(){
         
         if (answer == solution){
+            correct_sound.Play();
             cursor.SetCursorLock(true);
             solved = true;
             panel.gameObject.SetActive(false);
             touching = false;
             if (hardest_problem)
             {
-                SceneManager.LoadScene(3);
+                SceneManager.LoadScene(2);
             }
             Destroy(gameObject);
         } else{
+            incorrect_sound.Play();
             input.text = "";
             placehold.text = "Incorrect";
             placehold.color = incorrect;
